@@ -1,5 +1,5 @@
-<h1>Integrating Django and Vue.js</h1>
-<h2><br />A simple recipe manager implementation with Django and Vue.</h2>
+<h1>Integrating Django and React.js</h1>
+<h2><br />A simple recipe manager implementation with Django and React.</h2>
 <p>&nbsp;</p>
 <li>The initial software description and architecture can be found <a href="https://drive.google.com/open?id=1hOcDWcIVbYaNhZ4ijZLJgVTqnYZlb_wN">Clicking Here</a></li>
 <p>&nbsp;</p>
