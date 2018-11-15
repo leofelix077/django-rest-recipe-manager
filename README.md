@@ -1,7 +1,7 @@
 <h1>Integrating Django and Vue.js</h1>
 <h2><br />A simple recipe manager implementation with Django and Vue.</h2>
 <p>&nbsp;</p>
-<p><strong>This projects consists of a Django Back-end, providing a REST API and a Vue.js Front-End.</strong></p>
+<li>The initial software description and architecture can be found <a href="https://drive.google.com/open?id=1hOcDWcIVbYaNhZ4ijZLJgVTqnYZlb_wN">Clicking Here</a></li>
 <p>&nbsp;</p>
 <p><strong>Requirements: <span style="color: #0000ff;">Vagrant and VirtualBox</span></strong></p>
 <ul>
