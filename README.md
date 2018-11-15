@@ -1,8 +1,6 @@
 <h1>Integrating Django and React.js</h1>
 <h2><br />A simple recipe manager implementation with Django and React.</h2>
 <p>&nbsp;</p>
-<li>The initial software description and architecture can be found <a href="https://drive.google.com/open?id=1hOcDWcIVbYaNhZ4ijZLJgVTqnYZlb_wN">Clicking Here</a></li>
-<p>&nbsp;</p>
 <p><strong>Requirements: <span style="color: #0000ff;">Vagrant and VirtualBox</span></strong></p>
 <ul>
 <li>To install <strong>Vagrant</strong>,&nbsp;<a href="https://www.vagrantup.com/downloads.html">Click Here</a> and install the respective version for your operating system.</li>
