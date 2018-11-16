@@ -19,15 +19,27 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
         return user
 
-
-class UserRecipesSerializer(serializers.ModelSerializer):
-
+class RecipeDetailsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.UserRecipes
+        model = models.RecipeDetails
+        fields = (
+            'recipe',
+            'ingredient',
+            'ingredient_quantity',
+            'ingredient_qty_unit',
+            'last_modified'
+            )
+
+class RecipesSerializer(serializers.ModelSerializer):
+
+    recipe_details = RecipeDetailsSerializer(many=True)    
+    
+    class Meta:
+        model = models.Recipes
         fields = (
             'complexity',
-            'user_profile',
             'title',
+            'user_profile',
             'time_taken',
             'instructions',
             'total_kcal',
@@ -35,9 +47,41 @@ class UserRecipesSerializer(serializers.ModelSerializer):
             'total_cost_crcy',
             'image',
             'image_url',
-            'last_modified'
+            'last_modified',
+            "recipe_details"
             )
-        extra_kwargs = {'user_profile': {"read_only": True}}
+
+
+class IngredientsEquivalenceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.IngredientsEquivalence
+        fields = (
+            'ingredient',
+            'unit',
+            'target_unit',
+            'total_cost',
+            'last_modified',
+        )        
+
+class IngredientsSerializer(serializers.ModelSerializer):
+
+    ingredient_equivalence = IngredientsEquivalenceSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = models.Ingredients
+        fields = (
+            'name',
+            'article_number',
+            'description',
+            'unit_amount',
+            'unit_of_measurement',
+            'cost_per_unit',
+            'kcal_unit_amount',
+            'currency',
+            'last_modified',
+            'ingredient_equivalence'
+        )
+
 
 
 

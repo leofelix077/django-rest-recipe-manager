@@ -1,5 +1,4 @@
 from django.shortcuts import render
-
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -17,7 +16,6 @@ from . import permissions
 # Create your views here.
 
 class UserProfileViewSet(viewsets.ModelViewSet):
-    """Handles the CRUD for profile"""
     serializer_class = serializers.UserProfileSerializer
     queryset = models.UserProfile.objects.all()
     authentication_classes = (TokenAuthentication,)
@@ -26,23 +24,46 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     search_fields = ("name", "email",)
 
 class LoginViewSet(viewsets.ViewSet):
-    """check email and pwd, and returns an auth token"""
-
     serializer_class = AuthTokenSerializer
 
     def create(self, request):
-        """Use the ObtainAuthToken APIView to validate and create a token"""
         return ObtainAuthToken().post(request)
 
-class UserRecipesViewSet(viewsets.ModelViewSet):
-    """ Handles CRUD for Profile Feed Items """
-
+class RecipesViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
-    serializer_class = serializers.UserRecipesSerializer
-    queryset = models.UserRecipes.objects.all()
-    permission_classes = (permissions.PostOwnRecipes, IsAuthenticated,)
+    serializer_class = serializers.RecipesSerializer
+    queryset = models.Recipes.objects.all()
     
     def perform_create(self, serializer):
-        "sets the user profile ot the logged in user"
-
         serializer.save(user_profile=self.request.user)
+
+class RecipeDetailsViewSet(viewsets.ModelViewSet):
+
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.RecipeDetailsSerializer
+    queryset = models.RecipeDetails.objects.all()
+    
+    def perform_create(self, serializer):
+        serializer.save(user_profile=self.request.user)
+
+class IngredientsViewSet(viewsets.ModelViewSet):
+
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.IngredientsSerializer
+    queryset = models.Ingredients.objects.all()
+    
+    def perform_create(self, serializer):
+        serializer.save(user_profile=self.request.user, id=1)
+        
+    @property
+    def ingredient_equivalence(self):
+        return self.models.IngredientsEquivalence.objects.all()
+
+class IngredientsEquivalenceViewSet(viewsets.ModelViewSet):
+
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.IngredientsEquivalenceSerializer
+    queryset = models.IngredientsEquivalence.objects.all()
+    
+    def perform_create(self, serializer):
+        serializer.save(user_profile=self.request.user, ingredient_id=1, id=1)  
