@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'recipes_api'
+    'accounts',
+    'ingredient',
 ]
 
 MIDDLEWARE = [
@@ -122,4 +123,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = "recipes_api.UserProfile"
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),'static-server','media-root')
+MEDIA_URL = '/media/'
+
+from recipes_proj.restconf.main import *

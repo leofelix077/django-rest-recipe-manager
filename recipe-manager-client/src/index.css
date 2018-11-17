@@ -1,0 +1,104 @@
+body {
+  background-color: rgba(230, 243, 255, 1)
+}
+
+.navbar {
+  margin-bottom: 1rem;
+}
+
+.navbar a {
+  font-weight: bold;
+}
+
+.navbar li a:hover {
+  color: rgb(16, 0, 156);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.navbar-brand>img {
+  display: inline-block;
+  width: 20px;
+  border-radius: 2px;
+  margin-bottom: 2px;
+  margin-right: 5px;
+}
+
+ul.nav.navbar-nav li {
+  margin: 0 0.5rem;
+}
+
+.onboarding>.navbar {
+  background-color: #d6d6d6;
+  background-size: 100% 100%;
+  -webkit-box-shadow: 3px 3px 14px -2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 3px 3px 14px -2px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 3px 14px -2px rgba(0, 0, 0, 0.5);
+}
+
+.home-hero {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  flex-direction: column;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  z-index: -1;
+  background-image: url("https://get.apicbase.com/wp-content/uploads/2018/03/pos-integration.jpg");
+  text-align: center;
+  padding: 1rem;
+  background-position: center center;
+  background-size: cover;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 15px #66757f;
+  font-size: 50rem;
+}
+.home-hero>h1{
+  font-size: 15rem
+}
+
+.home-hero>.btn{
+  font-size: 3rem;
+  border-radius: 1rem;
+}
+
+.homepage-container {
+  position: relative;
+}
+
+h1 {
+  font-size: 48px;
+}
+
+h4 {
+  font-size: 24px;
+}
+
+#messages.list-group-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 7px 20px 12px;
+}
+
+#messages:not(.no-hover) .list-group-item:hover {
+  background-color: aqua
+}
+
+.timeline-image {
+  border-radius: 50px;
+  height: 48px;
+  width: 48px;
+  margin: 2px 30px 10px 10px;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+a.btn.btn-danger, a.btn.btn-danger:hover {
+  color: white;
+}
