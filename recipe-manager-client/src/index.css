@@ -27,13 +27,15 @@ body {
 ul.nav.navbar-nav li {
   margin: 0 0.5rem;
 }
-
+.home-hero>h1>strong{
+  color: #fffb00
+}
 .onboarding>.navbar {
-  background-color: #d6d6d6;
+  background-color: #f8da54af;
   background-size: 100% 100%;
-  -webkit-box-shadow: 3px 3px 14px -2px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 3px 3px 14px -2px rgba(0, 0, 0, 0.5);
-  box-shadow: 3px 3px 14px -2px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
 }
 
 .home-hero {
@@ -54,16 +56,24 @@ ul.nav.navbar-nav li {
   background-size: cover;
   font-weight: bold;
   color: white;
-  text-shadow: 0 0 15px #66757f;
+  text-shadow: 0 0 5px #66757f;
   font-size: 50rem;
 }
-.home-hero>h1{
+.btn .btn-outline-dark{
+  background-color: #66757f
+}
+.home-hero>h1 {
   font-size: 15rem
 }
 
-.home-hero>.btn{
+.home-hero>.btn {
   font-size: 3rem;
   border-radius: 1rem;
+  background-color: #3e454921;
+  -webkit-box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);  
+  margin-left:10%
 }
 
 .homepage-container {
@@ -72,6 +82,7 @@ ul.nav.navbar-nav li {
 
 h1 {
   font-size: 48px;
+  color: white
 }
 
 h4 {
@@ -95,8 +106,17 @@ h4 {
   margin: 2px 30px 10px 10px;
 }
 
+.container {
+  justify-content: center;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: 25%;
+  margin-left: 25%;
+}
+
 .btn:hover {
   cursor: pointer;
+  color:yellow  
 }
 
 a.btn.btn-danger, a.btn.btn-danger:hover {
