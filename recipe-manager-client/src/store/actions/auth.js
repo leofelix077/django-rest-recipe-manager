@@ -32,7 +32,7 @@ export function authUser(type, userData) {
                     dispatch(removeError())
                     resolve();
                 }).catch(err => {
-                    dispatch(addError(err || "Invalid Credentials. Try Again"));
+                    dispatch(addError(err.detail || "Invalid Credentials. Try Again"));
                     reject();
                 })
         })
