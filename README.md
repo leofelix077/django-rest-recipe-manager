@@ -50,13 +50,27 @@
             through the front-end later)&nbsp;</p>
     </li>
 
+    <h1>Running the Front-End</h1>
+    <p>To run the React Client, execute the following steps on your CLI:</p>
+    <p>&nbsp;</p>
 
+    <li>Inside the project directory, in your local magchine: <strong> /{WORKING_DIRECTORY}/src/recipe-manager-client/,&nbsp;</strong>execute the command "<strong>npm install</strong>" to update the project dependencies
+        <p>&nbsp;</p>
+    </li>
+    <li>Execute the command "<strong>npm start</strong>" to start the Client
+        <p>&nbsp;</p>
+    </li>
 
+    <h1>Known Limitations</h1>
     <li>
         <p><strong>Authorization is disabled. You can login, but the token is not verified later if you change the
                 request by hand</strong>&nbsp;</p>
     </li>
     <li>
-        <p><strong>Model for Recipe is not normalized</strong>&nbsp;</p>
+        <p><strong>Model for Recipe is not normalized (There isn't a Recipe and RecipeDetails table. It's all on
+                "Recipe")</strong>&nbsp;</p>
+    </li>
+    <li>
+        <p><strong>Nested Routes for /users/{id}/recipes/ return {"ingredient":{:id}}, not the Nested Object</strong>&nbsp;</p>
     </li>
 </ol>
