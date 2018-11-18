@@ -8,7 +8,9 @@ from ingredient.models import Ingredient
 User = get_user_model()
 
 class UserDetailsAPIView(generics.RetrieveAPIView):
-    permission_classes =[permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [
+        # permissions.IsAuthenticatedOrReadOnly
+        ]
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserDetailsSerializer
     lookup_field = 'id'

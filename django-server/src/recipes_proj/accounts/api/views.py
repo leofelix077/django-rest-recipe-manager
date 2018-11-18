@@ -18,7 +18,6 @@ class AuthAPIView(APIView):
     permission_classes = [AnonymousPermissionOnly]
 
     def post(self, request, *args, **kwargs):
-        # print(request.user)
         if request.user.is_authenticated():
             return Response({'detail': 'You are already authenticated'}, status=400)
         data = request.data

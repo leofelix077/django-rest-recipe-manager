@@ -19,19 +19,19 @@ class AuthForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        const authType = this.props.signUp ? "register/" : ''
+        const {onAuth, history, signUp} = this.props
         const { username, email, password } = this.state
-        const loginData = this.props.signUp ? { username, email, password } : { username, password }
-        this.props.onAuth(authType, loginData).then(() =>
-            console.log("logged")
-        ).catch(err => {
-            console.log(err.data)
+        const authType = signUp ? "register/" : ''
+        const loginData = signUp ? { username, email, password } : { username, password }
+        onAuth(authType, loginData).then(() =>
+            history.push('/')
+        ).catch(() => {
+            return;
         })
     }
 
     renderEmailOnSignUp = () => {
         const { email } = this.state
-        console.log(this.state)
         if (this.props.signUp) {
             return (
                 <div>
@@ -49,15 +49,32 @@ class AuthForm extends Component {
         }
     }
 
+    renderErrors = () => {
+        if (this.props.errors.message) {
+            return (
+                <div className="alert alert-danger">
+                    {this.props.errors.message}
+                </div>
+            )
+        }
+    }
+
     render() {
         const { username, password } = this.state
-        const { heading, buttonText, signUp } = this.props
+        const { heading, buttonText, history, removeError } = this.props
+
+        history.listen(() => {
+            removeError();
+        })
+
         return (
             <div>
                 <div className="row justify-content md-center text-center">
                     <div className="col-md-6">
                         <form onSubmit={this.handleSubmit}>
                             <h2>{heading}</h2>
+
+                            {this.renderErrors()}
 
                             {this.renderEmailOnSignUp()}
 

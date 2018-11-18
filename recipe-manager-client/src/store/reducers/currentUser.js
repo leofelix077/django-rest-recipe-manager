@@ -1,10 +1,10 @@
-import { SET_CURRENT_USER } from "../actionTypes"
+import { SET_CURRENT_USER, UPDATE_INGREDIENT_QUERY } from "../actionTypes"
 
 const DEFAULT_STATE = {
     isAuthenticated: false,
-    user: {
+    user: {},
+    queryString: ''
 
-    }
 }
 
 export default (state = DEFAULT_STATE, action) => {
@@ -14,6 +14,8 @@ export default (state = DEFAULT_STATE, action) => {
                 isAuthenticated: !!Object.keys(action.user).length,
                 user: action.user
             }
+        case UPDATE_INGREDIENT_QUERY:
+            return { ...state, queryString: action.queryString }
         default:
             return state;
     }

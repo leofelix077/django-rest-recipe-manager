@@ -89,14 +89,14 @@ h4 {
   font-size: 24px;
 }
 
-#messages.list-group-item {
+#ingredients.list-group-item {
   display: flex;
   align-items: flex-start;
   padding: 7px 20px 12px;
 }
 
-#messages:not(.no-hover) .list-group-item:hover {
-  background-color: aqua
+#ingredients:not(.no-hover) .list-group-item:hover {
+  background-color: rgba(253, 255, 125, 0.603)
 }
 
 .timeline-image {
@@ -121,4 +121,7 @@ h4 {
 
 a.btn.btn-danger, a.btn.btn-danger:hover {
   color: white;
+}
+ul {
+  padding-inline-start: 0
 }
