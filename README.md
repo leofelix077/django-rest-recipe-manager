@@ -51,6 +51,6 @@
 <p><strong>Model for Recipe is not normalized (There isn't a Recipe and RecipeDetails table. It's all on "Recipe")</strong>&nbsp;</p>
 </li>
 <li>
-<p><strong>Nested Routes for /users/{id}/recipes/ return {"ingredient":{:id}}, not the Nested Object</strong>&nbsp;</p>
+<p><strong>Nested Routes for "{api_root}/users/{id}/recipes/"  return only {"ingredient":{:id}}, not the Nested Object</strong>&nbsp;</p>
 </li>
 </ol>
