@@ -8,7 +8,6 @@ class Recipe(models.Model):
         
     user                = models.ForeignKey(settings.AUTH_USER_MODEL)
     title               = models.CharField(max_length=140)
-    ingredient          = models.ForeignKey(Ingredient)
     complexity          = models.CharField(max_length=20)
     content             = models.TextField()
     image_url           = models.CharField(max_length=255)

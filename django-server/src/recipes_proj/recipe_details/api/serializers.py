@@ -8,7 +8,6 @@ from rest_framework.reverse import reverse as api_reverse
 
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = RecipeIngredient
         fields = [

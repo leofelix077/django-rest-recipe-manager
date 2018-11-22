@@ -45,12 +45,3 @@ def post(self, request, *args, **kwargs):
     return self.create(request, *args, **kwargs)
 
 
-class UserIngredientAPIView(IngredientAPIView):
-    serializer_class = IngredientInlineUserSerializer
-    
-    def get_queryset(self, *args, **kwargs):
-        id = self.kwargs.get('id', None)
-        if id is None:
-            return Ingredient.objects.none()
-        return Ingredient.objects.filter(user__id=id)
-

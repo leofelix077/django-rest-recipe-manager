@@ -7,7 +7,7 @@ from rest_framework.reverse import reverse as api_reverse
 
 class RecipeSerializer(serializers.ModelSerializer):
     uri = serializers.SerializerMethodField(read_only=True)
-
+    
     class Meta:
         model = Recipe
         fields = [

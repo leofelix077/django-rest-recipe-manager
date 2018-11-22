@@ -10,7 +10,7 @@ from recipe.api.serializers import RecipeInlineUserSerializer
 from recipe.api.views import RecipeAPIView
 from recipe.models import Recipe
 
-from recipe_details.api.serializers import RecipeIngredientInlineUserSerializer
+from recipe_details.api.serializers import RecipeIngredientSerializer
 from recipe_details.api.views import RecipeIngredientAPIView
 from recipe_details.models import RecipeIngredient
 
@@ -45,15 +45,28 @@ class UserRecipeAPIView(RecipeAPIView):
         if id is None:
             return Recipe.objects.none()
         return Recipe.objects.filter(user__id=id)
-
-class UserRecipeIngredientAPIView(RecipeIngredientAPIView):
-    serializer_class = RecipeIngredientInlineUserSerializer
-
+        
+class RecipeIngredientAPIView(RecipeIngredientAPIView):
+    serializer_class = RecipeIngredientSerializer
+    lookup_field = 'id'
+    
     def get_queryset(self, *args, **kwargs):
         id = self.kwargs.get('id', None)
         if id is None:
             return RecipeIngredient.objects.none()
         return RecipeIngredient.objects.filter(user__id=id)
+
+class UserRecipeIngredientAPIView(RecipeIngredientAPIView):
+    serializer_class = RecipeIngredientSerializer
+    lookup_field = 'id'
+    
+    def get_queryset(self, *args, **kwargs):
+        id = self.kwargs.get('id', None)
+        recipe_id = self.kwargs.get('recipe_id', None)
+        if id is None and recipe_id is None:
+            return RecipeIngredient.objects.none()
+        return RecipeIngredient.objects.filter(user__id=id, recipe__id=recipe_id)
+        
 
 
 
