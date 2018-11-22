@@ -1,5 +1,5 @@
 body {
-  background-color: rgba(230, 243, 255, 1)
+  background-color: rgb(223, 223, 223)
 }
 
 .navbar {
@@ -27,11 +27,21 @@ body {
 ul.nav.navbar-nav li {
   margin: 0 0.5rem;
 }
-.home-hero>h1>strong{
-  color: #fffb00
+
+.home-hero>h1{
+    text-shadow: 0px 3px 0px #b2a98f,
+                 0px 7px 5px rgba(0,0,0,0.15),
+                 0px 12px 1px rgba(0,0,0,0.1),
+                 0px 17px 15px rgba(0,0,0,0.1);
 }
+
+.home-hero>h1>strong {
+  color: #ffeb3b;
+  text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+}
+
 .onboarding>.navbar {
-  background-color: #f8da54af;
+  background-color: #ffeb3b;
   background-size: 100% 100%;
   -webkit-box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
@@ -59,9 +69,11 @@ ul.nav.navbar-nav li {
   text-shadow: 0 0 5px #66757f;
   font-size: 50rem;
 }
-.btn .btn-outline-dark{
+
+.btn .btn-outline-dark {
   background-color: #66757f
 }
+
 .home-hero>h1 {
   font-size: 15rem
 }
@@ -69,11 +81,12 @@ ul.nav.navbar-nav li {
 .home-hero>.btn {
   font-size: 3rem;
   border-radius: 1rem;
-  background-color: #3e454921;
   -webkit-box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
-  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);  
-  margin-left:10%
+  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
+  margin-left: 10%;
+  color: #f5f100;
+  text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);  
 }
 
 .homepage-container {
@@ -93,10 +106,13 @@ h4 {
   display: flex;
   align-items: flex-start;
   padding: 7px 20px 12px;
+  -webkit-box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
 }
 
 #ingredients:not(.no-hover) .list-group-item:hover {
-  background-color: rgba(253, 255, 125, 0.603)
+  background-color: rgba(188, 229, 229, 0.192)
 }
 
 .timeline-image {
@@ -110,18 +126,36 @@ h4 {
   justify-content: center;
   padding-right: 15px;
   padding-left: 15px;
-  margin-right: 25%;
-  margin-left: 25%;
+  margin-left: 10%
 }
 
 .btn:hover {
   cursor: pointer;
-  color:yellow  
+  color: #e65100
 }
 
 a.btn.btn-danger, a.btn.btn-danger:hover {
   color: white;
 }
+
 ul {
-  padding-inline-start: 0
+  padding-inline-start: 0;
+}
+
+.list-group-item {
+  margin-top: 3px;
+  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
+}
+
+.form-control {
+  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
+  margin-bottom: 10px;
+}
+
+h4 {
+  color: black
+}
+
+select.form-control{
+  width: 200%
 }

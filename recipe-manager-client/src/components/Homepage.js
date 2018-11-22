@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import IngredientDashboard from './IngredientDashboard'
+import Dashboard from './Dashboard'
 
 const renderHomepage = () => {
     return (
@@ -19,11 +19,7 @@ const Homepage = ({ currentUser }) => {
     if (!currentUser.isAuthenticated) {
         { return renderHomepage() }
     }
-    return (
-        <div>
-            <IngredientDashboard />
-        </div>
-    )
+    return <Dashboard />
 }
 
 export default Homepage

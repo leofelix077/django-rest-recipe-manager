@@ -6,7 +6,7 @@ from django.db import models
 class Ingredient(models.Model):
     user                = models.ForeignKey(settings.AUTH_USER_MODEL)
     title               = models.CharField(max_length=140)
-    article_number      = models.TextField(max_length=20)
+    article_number      = models.TextField(max_length=20, blank=True)
     cost_per_unit       = models.DecimalField(max_digits=23, decimal_places=2)
     unit_of_measurement = models.CharField(max_length=10)
     unit_of_measure_amt = models.DecimalField(max_digits=10, decimal_places=2)

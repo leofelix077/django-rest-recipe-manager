@@ -3,51 +3,51 @@ import { connect } from "react-redux"
 import { postNewIngredient, updateIngredient } from "../store/actions/ingredients"
 
 class IngredientForm extends Component {
+    state = {
+        title: '',
+        article_number: '',
+        cost_per_unit: '',
+        unit_of_measure_amt: '',
+        unit_of_measurement: 'cL',
+        editMode: false
+    }
+
     constructor(props) {
         super(props);
-
-        let editFormData = this.props.ingredients.filter(ingredient => {
-            if (`${ingredient.id}` === `${this.props.match.params.ing_id}`)
-                return ingredient
-        })
+        const editFormData = this.loadFormDataFromParams()
         if (this.props.match.params.ing_id && editFormData.length !== 0) {
             this.state = { ...editFormData[0], editMode: true };
         }
-        else {
-            this.state = {
-                title: '',
-                article_number: '',
-                cost_per_unit: '',
-                unit_of_measure_amt: '',
-                unit_of_measurement: 'cL',
-            }
+        if (!this.state.editMode && this.props.match.path === "/users/:id/ingredients/:ing_id/edit") {
+            this.props.history.push(`/users/${this.props.match.params.id}/ingredients/new`)
         }
     }
 
-    handleIngredient = event => {
-        if (!this.state.editMode) {
-            this.handleNewIngredient(event)
-        } else {
-            this.handleUpdateIngredient(event)
-        }
-        this.props.history.push('/')
+    loadFormDataFromParams = () => {
+        let formData = this.props.ingredients.filter(ingredient => {
+            if (`${ingredient.id}` === `${this.props.match.params.ing_id}`)
+                return ingredient
+        })
+        return formData
     }
+
+    handleIngredient = event => this.state.editMode ? this.handleUpdateIngredient(event) : this.handleNewIngredient(event)
 
     handleNewIngredient = event => {
         event.preventDefault()
-        this.props.postNewIngredient(this.state)
-        this.setState({
-            title: '',
-            article_number: '',
-            cost_per_unit: '',
-            unit_of_measure_amt: '',
-            unit_of_measurement: 'cL'
+        this.props.postNewIngredient(this.state).then(() => {
+            this.resetState()
         })
     }
 
     handleUpdateIngredient = event => {
         event.preventDefault()
-        this.props.updateIngredient(this.state)
+        this.props.updateIngredient(this.state).then(() => {
+            this.resetState()
+        })
+    }
+
+    resetState = () => {
         this.setState({
             title: '',
             article_number: '',
@@ -55,6 +55,7 @@ class IngredientForm extends Component {
             unit_of_measure_amt: '',
             unit_of_measurement: 'cL'
         })
+        this.props.history.push('/')
     }
 
     render() {
@@ -81,6 +82,7 @@ class IngredientForm extends Component {
                     placeholder='111 222 333 444'
                     value={this.state.article_number}
                     onChange={e => this.setState({ article_number: e.target.value })}
+                    maxlength="13"
                 />
 
                 <label htmlFor='cost_per_unit'>Cost Per Unit (EUR)</label>
@@ -91,6 +93,7 @@ class IngredientForm extends Component {
                     id="cost_per_unit"
                     value={this.state.cost_per_unit}
                     onChange={e => this.setState({ cost_per_unit: e.target.value })}
+                    required
                 />
                 <label htmlFor='unit_of_measure_amt'>Quantity</label>
                 <div className="form-group row">
@@ -102,6 +105,7 @@ class IngredientForm extends Component {
                             id="unit_of_measure_amt"
                             value={this.state.unit_of_measure_amt}
                             onChange={e => this.setState({ unit_of_measure_amt: e.target.value })}
+                            required
                         />
                     </div>
                     <div className="col-xs-2">
@@ -115,7 +119,7 @@ class IngredientForm extends Component {
                 </div>
 
                 <button type='submit' className='btn btn-success pull-left'>
-                    {this.state.editMode ? ('Update') : ('Submit')}
+                    {this.state.editMode ? ('Update') : ('Create')}
                 </button>
             </form>
         )

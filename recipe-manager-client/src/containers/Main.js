@@ -6,8 +6,10 @@ import AuthForm from "../components/AuthForm"
 import authUser from "../store/actions/auth"
 import { removeError } from "../store/actions/errors"
 import { fetchIngredients } from "../store/actions/ingredients"
+import { fetchRecipes } from "../store/actions/recipes"
 import  withAuth  from "../hocs/withAuth"
 import  IngredientForm  from '../containers/IngredientForm'
+import  RecipeForm  from '../containers/RecipeForm'
 
 const Main = props => {
     const { authUser, errors, removeError, currentUser } = props
@@ -45,6 +47,9 @@ const Main = props => {
                 <Route path='/users/:id/ingredients/new' component={withAuth(IngredientForm)} />
                 <Route path='/users/:id/ingredients/:ing_id/edit' component={withAuth(IngredientForm)} />
 
+                <Route path='/users/:id/recipes/new' component={withAuth(RecipeForm)} />
+                <Route path='/users/:id/recipes/:recipe_id/edit' component={withAuth(RecipeForm)} />
+
             </Switch>
         </div>
     )
@@ -59,4 +64,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, { authUser, removeError, fetchIngredients })(Main))
+export default withRouter(connect(mapStateToProps, { authUser, removeError, fetchIngredients, fetchRecipes })(Main))

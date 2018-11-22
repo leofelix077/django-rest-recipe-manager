@@ -15,10 +15,10 @@ const IngredientItem = ({
                 <div className='ingredient-area'>
                     <Link to={`/users/${user}/ingredients/${id}/edit/`}><h2>{title}</h2></Link>
                     <div>
-                        <h4>Article Number: {article_number}</h4>
+                        {article_number && (<h4>Article Number: {article_number}</h4>)}
                     </div>
                     <div>
-                        <h4>Cost: {cost_per_unit} EUR /  {unit_of_measure_amt} {unit_of_measurement}  </h4>
+                        <h4>€{cost_per_unit} per {unit_of_measure_amt} {unit_of_measurement}  </h4>
                     </div>
                 </div>
             </li>

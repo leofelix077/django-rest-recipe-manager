@@ -37,7 +37,7 @@ class RecipeAPIView(generics.ListCreateAPIView):
     permission_classes = []
     authentication_classes = []
     serializer_class = RecipeSerializer
-
+    search_fields = ('title',)
     queryset = Recipe.objects.all()
 
 
@@ -53,3 +53,4 @@ class UserIngredientAPIView(IngredientAPIView):
         if id is None:
             return Ingredient.objects.none()
         return Ingredient.objects.filter(user__id=id)
+

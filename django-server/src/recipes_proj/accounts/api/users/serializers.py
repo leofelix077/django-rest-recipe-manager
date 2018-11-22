@@ -23,10 +23,11 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     def get_recipe(self, obj):
         request = self.context.get('request')
         qs = obj.recipe_set.all()  # [:10]
-
         return {
             "recipe": RecipeInlineUserSerializer(qs, many=True).data,
         }
+  
+
 
     def get_uri(self, obj):
         request = self.context.get('request')

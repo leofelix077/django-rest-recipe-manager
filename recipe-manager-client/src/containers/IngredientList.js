@@ -5,7 +5,9 @@ import IngredientItem from "../components/IngredientItem"
 import { createBrowserHistory } from 'history';
 
 class IngredientList extends Component {
-    componentWillMount() {
+
+
+    componentDidMount() {
         createBrowserHistory()
         this.props.fetchIngredients(this.props.currentUser.user.user_id, this.props.queryString);
     }
@@ -30,25 +32,21 @@ class IngredientList extends Component {
             />
         })
         return (
-            <div className='row col-sm-8'>
-                <div className="col-sm-10">
-                    <label htmlFor='query'>Search</label>
-                    <input
-                        type="text"
-                        className='form-control'
-                        name="query"
-                        id="query"
-                        placeholder='E.g: Carrot'
-                        value={this.props.queryString}
-                        onChange={e => this.handleUpdate(e)}
-                    />
-                </div>
-                <div className="offset-1 col-sm-10">
-                    <ul className='list-group-items' id='ingredients'>
-                        {ingredientList}
-                    </ul>
-                </div>
-            </div>
+            <span className="col-sm-12">
+                <label htmlFor='query'>Search Ingredient</label>
+                <input
+                    type="text"
+                    className='form-control'
+                    name="query"
+                    id="query"
+                    placeholder='E.g: Carrot'
+                    value={this.props.queryString}
+                    onChange={e => this.handleUpdate(e)}
+                />
+                <ul id='ingredients'>
+                    {ingredientList}
+                </ul>
+            </span>
         )
     }
 }

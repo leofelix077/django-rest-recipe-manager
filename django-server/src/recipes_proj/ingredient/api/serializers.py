@@ -40,3 +40,4 @@ class IngredientInlineUserSerializer(IngredientSerializer):
         ]
         # read_only_fields = ['user']
         
+        

@@ -30,9 +30,9 @@
 <p>To run the React Client, execute the following steps on your CLI:</p>
 <ol>
 <ol>
-<li>Inside the project directory, in your local magchine: <strong> /{WORKING_DIRECTORY}/src/recipe-manager-client/,&nbsp;</strong>execute the command "<strong>npm install</strong>" to update the project dependencies</li>
+<li>Inside the project directory, in your local machine: <strong> /{WORKING_DIRECTORY}/src/recipe-manager-client/,&nbsp;</strong>execute the command "<strong>npm install</strong>" to update the project dependencies</li>
 <li>Execute the command "<strong>npm start</strong>" to start the Client</li>
-<li>To execute the application, please run your browser in "unsafe" mode, due to CORS policies. For Google Chrome on Windows this can be done through the command "<strong>chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security"</strong></li>
+<li>To execute the application, please run your browser in "unsafe" mode, due to CORS policies. For Google Chrome on Windows this can be done by pressing "Win+R", through the command "<strong>chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security"</strong></li>
 </ol>
 </ol>
 <h1>Known Limitations</h1>
