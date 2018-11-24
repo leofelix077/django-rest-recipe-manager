@@ -2,15 +2,11 @@ import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { fetchRecipes, updateQueryString } from "../store/actions/recipes"
 import RecipeItem from "../components/RecipeItem"
-import { createBrowserHistory } from 'history';
 
 class IngredientList extends Component {
 
-
     componentDidMount() {
-        console.log(this.props)
         const { user_id } = this.props.currentUser.user
-        createBrowserHistory()
         this.props.fetchRecipes(user_id, this.props.queryString);
     }
 
@@ -39,7 +35,7 @@ class IngredientList extends Component {
                     className='form-control'
                     name="query"
                     id="query"
-                    placeholder='E.g: Carrot'
+                    placeholder='E.g: Cheese Cake'
                     value={this.props.queryString}
                     onChange={e => this.handleUpdate(e)}
                 />

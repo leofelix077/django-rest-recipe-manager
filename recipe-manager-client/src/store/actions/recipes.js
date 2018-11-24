@@ -31,6 +31,7 @@ export const postNewRecipe = (data) => (dispatch, getState) => {
     const newData = { ...data, user: id }
     return apiCall('post', `/api/users/${id}/recipes/`, newData)
         .then((res) => {
+            return res
         })
         .catch((err) => {
             dispatch(addError(err.detail || "Not possible to post recipe"))

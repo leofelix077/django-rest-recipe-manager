@@ -15,13 +15,10 @@ class RecipeSerializer(serializers.ModelSerializer):
             'id',
             'user',
             'title',
-            'ingredient',
-            'ingredient_amount',
             'complexity',
             'content',
             'image_url',
             'total_kcal',
-            'unit_of_measure_amt',
         ]
 
     def get_uri(self, obj):
@@ -42,7 +39,6 @@ class RecipeInlineUserSerializer(RecipeSerializer):
             'content',
             'image_url',
             'total_kcal',
-            'unit_of_measure_amt',
         ]
   
     

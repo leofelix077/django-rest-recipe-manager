@@ -13,6 +13,18 @@ export const updateQueryString = queryString => ({
     queryString
 })
 
+export const postMapIngredientsToRecipes = (data) => (dispatch, getState) => {
+    let { currentUser } = getState();
+    const id = currentUser.user.user_id
+    const newData = { ...data, user: id }
+    return apiCall('post', `/api/users/${id}/ingredients/`, newData)
+        .then((res) => {
+        })
+        .catch((err) => {
+            dispatch(addError(err || "Not possible to post ingredient"))
+        })
+}
+
 
 export const fetchIngredients = (user_id, queryString) => {
     let query = queryString ? `?q=${queryString}` : ''
@@ -26,6 +38,7 @@ export const fetchIngredients = (user_id, queryString) => {
             })
     }
 }
+
 export const postNewIngredient = (data) => (dispatch, getState) => {
     let { currentUser } = getState();
     const id = currentUser.user.user_id

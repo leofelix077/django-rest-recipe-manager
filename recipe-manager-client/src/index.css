@@ -28,11 +28,8 @@ ul.nav.navbar-nav li {
   margin: 0 0.5rem;
 }
 
-.home-hero>h1{
-    text-shadow: 0px 3px 0px #b2a98f,
-                 0px 7px 5px rgba(0,0,0,0.15),
-                 0px 12px 1px rgba(0,0,0,0.1),
-                 0px 17px 15px rgba(0,0,0,0.1);
+.home-hero>h1 {
+  text-shadow: 0px 3px 0px #b2a98f, 0px 7px 5px rgba(0, 0, 0, 0.15), 0px 12px 1px rgba(0, 0, 0, 0.1), 0px 17px 15px rgba(0, 0, 0, 0.1);
 }
 
 .home-hero>h1>strong {
@@ -86,7 +83,7 @@ ul.nav.navbar-nav li {
   box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
   margin-left: 10%;
   color: #f5f100;
-  text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);  
+  text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
 }
 
 .homepage-container {
@@ -156,6 +153,31 @@ h4 {
   color: black
 }
 
-select.form-control{
+select.form-control {
   width: 200%
+}
+
+#image-recipe {
+  width: 250px;
+  border-radius: 10%;
+  margin-bottom: 5%;
+  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
+}
+
+#unit_of_measurement {
+  size: 2em;
+  padding-right: 0;
+  margin-right: 5px;
+  padding-left: 1%;
+  font-size: large
+}
+
+#total-cost{
+  size: 2em;
+  padding-right: 0;
+  margin-right: 5px;
+  padding-left: 1%;
+  font-size: large;
+  margin-top:25px
+
 }

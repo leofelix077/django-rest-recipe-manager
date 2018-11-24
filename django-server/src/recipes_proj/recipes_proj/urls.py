@@ -23,5 +23,5 @@ urlpatterns = [
     url(r'^api/users/', include('accounts.api.users.urls', namespace='api-user')),
     url(r'^api/ingredients/', include('ingredient.api.urls' , namespace='api-ingredient')),
     url(r'^api/recipes/', include('recipe.api.urls' , namespace='api-recipe')),
-    url(r'^api/recipe_details/', include('recipe_details.api.urls' , namespace='api-recipe')),
+    url(r'^api/recipe_details/', include('recipe_details.api.urls' , namespace='api-recipe_details')),
 ]

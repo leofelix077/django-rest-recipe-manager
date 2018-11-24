@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { fetchIngredients, updateQueryString } from "../store/actions/ingredients"
 import IngredientItem from "../components/IngredientItem"
-import { createBrowserHistory } from 'history';
 
 class IngredientList extends Component {
 
 
     componentDidMount() {
-        createBrowserHistory()
         this.props.fetchIngredients(this.props.currentUser.user.user_id, this.props.queryString);
     }
 

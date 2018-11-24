@@ -12,7 +12,8 @@ class Recipe(models.Model):
     content             = models.TextField()
     image_url           = models.CharField(max_length=255)
     total_kcal          = models.IntegerField()
-    unit_of_measure_amt = models.DecimalField(max_digits=10, decimal_places=2)
+    created_on          = models.DateTimeField(auto_now_add=True)
+    last_modified       = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.title)
@@ -20,3 +21,4 @@ class Recipe(models.Model):
     class Meta:
         verbose_name = "recipe"
         verbose_name_plural = "recipes"
+        ordering = ['-last_modified']
