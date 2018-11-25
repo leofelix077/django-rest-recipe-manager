@@ -14,21 +14,33 @@ class IngredientList extends Component {
         this.props.fetchIngredients(this.props.currentUser.user.user_id, e.target.value)
     }
 
+    renderIngredientList = () => {
+        const { ingredients } = this.props;
+        if (ingredients[0]) {
+            let ingredientList = ingredients.map(ingredient => {
+                return <IngredientItem
+                    key={ingredient.id}
+                    id={ingredient.id}
+                    user={ingredient.user}
+                    title={ingredient.title}
+                    article_number={ingredient.article_number}
+                    cost_per_unit={ingredient.cost_per_unit}
+                    unit_of_measure_amt={ingredient.unit_of_measure_amt}
+                    unit_of_measurement={ingredient.unit_of_measurement}
+                />
+            })
+            return ingredientList
+        }
+        return (
+            <div className='jumbotron'>
+                <hr className="my-4" />
+                <h1>No data</h1>
+                <hr className="my-4" />
+            </div>
+        )
+    }
 
     render() {
-        const { ingredients } = this.props;
-        let ingredientList = ingredients.map(ingredient => {
-            return <IngredientItem
-                key={ingredient.id}
-                id={ingredient.id}
-                user={ingredient.user}
-                title={ingredient.title}
-                article_number={ingredient.article_number}
-                cost_per_unit={ingredient.cost_per_unit}
-                unit_of_measure_amt={ingredient.unit_of_measure_amt}
-                unit_of_measurement={ingredient.unit_of_measurement}
-            />
-        })
         return (
             <span className="col-sm-12">
                 <label htmlFor='query'>Search Ingredient</label>
@@ -42,7 +54,7 @@ class IngredientList extends Component {
                     onChange={e => this.handleUpdate(e)}
                 />
                 <ul id='ingredients'>
-                    {ingredientList}
+                    {this.renderIngredientList()}
                 </ul>
             </span>
         )

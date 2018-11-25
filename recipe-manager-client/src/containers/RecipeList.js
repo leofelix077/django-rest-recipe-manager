@@ -15,20 +15,33 @@ class IngredientList extends Component {
         this.props.fetchRecipes(user_id, e.target.value)
     }
 
+    renderRecipes = () => {
+        const { recipes } = this.props;
+        if (recipes[0]) {
+            let recipeList = recipes.map(recipe => {
+                return <RecipeItem
+                    key={recipe.id}
+                    id={recipe.id}
+                    user={recipe.user}
+                    title={recipe.title}
+                    content={recipe.content}
+                    image_url={recipe.image_url}
+                    total_cost={recipe.total_cost}
+                />
+            })
+            return recipeList
+        }
+        return (
+            <div className='jumbotron'>
+                <hr className="my-4" />
+                <h1>No data</h1>
+                <hr className="my-4" />
+            </div>
+        )
+    }
 
     render() {
-        const { recipes } = this.props;
-        let recipeList = recipes.map(recipe => {
-            return <RecipeItem
-                key={recipe.id}
-                id={recipe.id}
-                user={recipe.user}
-                title={recipe.title}
-                content={recipe.content}
-                image_url={recipe.image_url}
-                total_cost={recipe.total_cost}
-            />
-        })
+
         return (
             <span className="col-sm-12">
                 <label htmlFor='query'>Search Recipe</label>
@@ -42,7 +55,7 @@ class IngredientList extends Component {
                     onChange={e => this.handleUpdate(e)}
                 />
                 <ul id='ingredients'>
-                    {recipeList}
+                    {this.renderRecipes()}
                 </ul>
             </span>
         )

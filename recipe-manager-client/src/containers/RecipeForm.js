@@ -28,7 +28,14 @@ class RecipeForm extends Component {
                 unitOfMeasurementAmount = recipeDetail.ingredient === ingredient.id ? recipeDetail.ingredient_amount : 0
                 return recipeDetail.ingredient === ingredient.id
             })
-            this.setState({ ingredients: [...this.state.ingredients, { ...ingredient, selected, unit_of_measure_amt: unitOfMeasurementAmount }] })
+            this.setState({
+                ingredients: [...this.state.ingredients, {
+                    ...ingredient,
+                    selected,
+                    unit_of_measure_amt: unitOfMeasurementAmount,
+                    original_cost_amount: ingredient.unit_of_measure_amt
+                }]
+            })
         })
         this.setState({ selectedValue: '' })
     }
@@ -43,7 +50,14 @@ class RecipeForm extends Component {
     setInitialStateForCreation = () => {
         this.props.fetchIngredients(this.props.currentUser.user.user_id).then(() => {
             this.props.ingredients.map((ingredient, index) => {
-                this.setState({ ingredients: [...this.state.ingredients, { ...ingredient, selected: false, unit_of_measure_amt: 0 }] })
+                this.setState({
+                    ingredients: [...this.state.ingredients, {
+                        ...ingredient,
+                        selected: false,
+                        unit_of_measure_amt: 0,
+                        original_cost_amount: ingredient.unit_of_measure_amt
+                    }]
+                })
             })
             this.setState({ selectedValue: '' })
         });
@@ -102,17 +116,18 @@ class RecipeForm extends Component {
 
     recalculateTotalAmount = () => {
         let result = this.state.ingredients
-            .map(ingredient => ingredient.unit_of_measure_amt / ingredient.cost_per_unit)
+            .map(ingredient => ingredient.unit_of_measure_amt / ingredient.original_cost_amount * ingredient.cost_per_unit)
             .reduce((acc, value) => acc = acc + value, 0)
             .toFixed(2)
         return result
     }
 
     handleIngredientAmountUpdate = (value, i) => {
+        console.log(this.state)
         const ingredients = this.state.ingredients
         ingredients[i].unit_of_measure_amt = value
         this.setState({ ingredients })
-        let totalCost = this.recalculateTotalAmount();
+        let totalCost = this.recalculateTotalAmount(value);
         this.setState({ total_cost: totalCost })
 
     }
@@ -150,7 +165,10 @@ class RecipeForm extends Component {
                             </div>
                             <h4 className='col-xs-1' id='unit_of_measurement'>{this.state.ingredients[i] && (this.state.ingredients[i].unit_of_measurement)}</h4>
                             <h4 className='col-xs-1' id='unit_of_measurement'>€{this.state.ingredients[i] && (
-                                (this.state.ingredients[i].unit_of_measure_amt / this.state.ingredients[i].cost_per_unit).toFixed(2)
+                                (
+                                    this.state.ingredients[i].unit_of_measure_amt
+                                    / this.state.ingredients[i].original_cost_amount
+                                    * this.state.ingredients[i].cost_per_unit).toFixed(2)
                             )}</h4>
                             <button type="button" className='btn btn-danger' onClick={e => this.handleIngredientRemoval(i)}>Delete</button>
                         </div>
