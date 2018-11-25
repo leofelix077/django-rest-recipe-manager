@@ -6,7 +6,8 @@ const RecipeItem = ({
     user,
     title,
     content,
-    image_url
+    image_url,
+    total_cost
 }) => (
         <div>
             <li className='list-group-item row'>
@@ -16,20 +17,16 @@ const RecipeItem = ({
                 <div className='ingredient-area'>
 
                     <h2>{title}</h2>
-                    
-                    <Link to={`/users/${user}/recipes/${id}/`}>
-                        <button className='btn btn-info'>
-                            Display
-                        </button>
+                    <div className='col-xs-8'>
+                        <h2> €{total_cost}</h2>
+                    </div>
+                    <Link to={`/users/${user}/recipes/${id}/`} className='btn btn-info'>
+                        Display
                     </Link>
 
-                    <Link to={`/users/${user}/recipes/${id}/edit/`}>
-                        <button className='btn btn-warning'>
-                            Edit
-                        </button>
+                    <Link to={`/users/${user}/recipes/${id}/edit/`} className='btn btn-warning'>
+                        Edit
                     </Link>
-
-
                 </div>
                 <blockquote className='blockquote'>
                     <p className='text-left text-justify text-muted mb-0'>{content}</p>

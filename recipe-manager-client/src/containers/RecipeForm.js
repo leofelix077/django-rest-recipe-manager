@@ -12,21 +12,13 @@ import { fetchRecipeDetails } from "../store/actions/recipeDetails"
 
 
 class RecipeCreateForm extends Component {
-    componentDidMount() {
+    componentDidMount = () => {
         this.props.match.path === "/users/:id/recipes/new" ? this.setInitialStateForCreation() : this.setInitialStateForUpdate()
     }
 
     constructor(props) {
         super(props);
-        this.state = {
-            title: '',
-            content: '',
-            image_url: '',
-            total_kcal: '',
-            editMode: false,
-            ingredients: [
-            ],
-        }
+        this.state = { title: '', content: '', image_url: '', total_kcal: '', editMode: false, ingredients: [] }
     }
 
     mapSelectedIngredients = () => {
@@ -38,22 +30,15 @@ class RecipeCreateForm extends Component {
             })
             this.setState({ ingredients: [...this.state.ingredients, { ...ingredient, selected, unit_of_measure_amt: unitOfMeasurementAmount }] })
         })
-
         this.setState({ selectedValue: '' })
     }
 
     setInitialStateForUpdate = () => {
         const { id, recipe_id } = this.props.match.params
-        this.props.fetchRecipe(recipe_id).then((selectedRecipe) =>
-            this.setState({ ...selectedRecipe })
-        )
-        this.props.fetchRecipeDetails(id, recipe_id).then((recipeDetails) => {
-            this.setState({ recipeDetails })
-        })
+        this.props.fetchRecipe(recipe_id, id).then((selectedRecipe) => this.setState({ ...selectedRecipe }))
+        this.props.fetchRecipeDetails(id, recipe_id).then((recipeDetails) => this.setState({ recipeDetails }))
+        this.props.fetchIngredients(this.props.currentUser.user.user_id).then(() => this.mapSelectedIngredients());
 
-        this.props.fetchIngredients(this.props.currentUser.user.user_id).then(() => {
-            this.mapSelectedIngredients()
-        });
     }
 
     setInitialStateForCreation = () => {
@@ -67,8 +52,8 @@ class RecipeCreateForm extends Component {
 
     handleUpdateRecipe = event => {
         event.preventDefault()
-        const { user, title, complexity, content, image_url, total_kcal, id } = this.state
-        this.props.updateRecipe({ id, user, title, complexity, content, image_url, total_kcal })
+        const { user, title, complexity, content, image_url, total_kcal, id, total_cost } = this.state
+        this.props.updateRecipe({ id, user, title, complexity, content, image_url, total_kcal, total_cost })
             .then((recipe) => this.mapRecipeToIngredients(recipe))
     }
 
@@ -98,8 +83,8 @@ class RecipeCreateForm extends Component {
 
     handleNewRecipe = event => {
         event.preventDefault()
-        const { user, title, complexity, content, image_url, total_kcal } = this.state
-        this.props.postNewRecipe({ user, title, complexity, content, image_url, total_kcal })
+        const { user, title, complexity, content, image_url, total_kcal, total_cost } = this.state
+        this.props.postNewRecipe({ user, title, complexity, content, image_url, total_kcal, total_cost })
             .then((recipe) => {
                 const { ingredients } = this.state
                 ingredients.filter((ingredient) => ingredient.selected !== false && ingredient.unit_of_measure_amt)
@@ -116,10 +101,20 @@ class RecipeCreateForm extends Component {
         this.setState({ ingredients })
     }
 
+    recalculateTotalAmount = () => {
+        let result = this.state.ingredients
+            .map(ingredient => ingredient.unit_of_measure_amt / ingredient.cost_per_unit)
+            .reduce((acc, value) => acc = acc + value, 0)
+            .toFixed(2)
+            return result
+    }
+
     handleIngredientAmountUpdate = (value, i) => {
         const ingredients = this.state.ingredients
         ingredients[i].unit_of_measure_amt = value
         this.setState({ ingredients })
+        let totalCost = this.recalculateTotalAmount();
+        this.setState({total_cost:totalCost})
 
     }
 
@@ -165,11 +160,7 @@ class RecipeCreateForm extends Component {
 
     renderIngredientSelectOption = event => {
         return (
-            <select
-                className='form-control'
-                value={this.state.selectedValue}
-                onChange={e => this.handleIngredientSelection(e.target.value)}
-            >
+            <select className='form-control' value={this.state.selectedValue} onChange={e => this.handleIngredientSelection(e.target.value)}>
                 <option disabled selected value={this.state.selectedValue ? this.state.selectedValue : ''}> -- Select an ingredient -- </option>
                 {this.state.ingredients.map((ingredient, index) => {
                     if (!ingredient.selected)
@@ -178,7 +169,6 @@ class RecipeCreateForm extends Component {
                 )}
             </select>
         )
-
     }
 
     renderTitle = () => {
@@ -191,7 +181,7 @@ class RecipeCreateForm extends Component {
                     name="title"
                     id="title"
                     placeholder='E.g: Cheese Cake'
-                    defaultValue={this.state.title}
+                    value={this.state.title}
                     onChange={e => this.setState({ title: e.target.value })}
                     required
                 />
@@ -208,7 +198,7 @@ class RecipeCreateForm extends Component {
                     className='form-control'
                     name="content"
                     id="content"
-                    defaultValue={this.state.title}
+                    value={this.state.content}
                     onChange={e => this.setState({ content: e.target.value })}
                     required
                 />
@@ -225,7 +215,7 @@ class RecipeCreateForm extends Component {
                     className='form-control'
                     name="total_kcal"
                     id="total_kcal"
-                    defaultValue={this.state.total_kcal}
+                    value={this.state.total_kcal}
                     onChange={e => this.setState({ total_kcal: e.target.value })}
                     required
                 />
@@ -242,7 +232,7 @@ class RecipeCreateForm extends Component {
                     className='form-control'
                     name="image_url"
                     id="image_url"
-                    defaultValue={this.state.image_url}
+                    value={this.state.image_url}
                     onChange={e => this.setState({ image_url: e.target.value })}
                 />
                 <img id='image-recipe' className='rounded mx-auto d-block' src={this.state.image_url || 'https://www.digitalcitizen.life/sites/default/files/styles/lst_small/public/featured/2016-08/photo_gallery.jpg'} />
@@ -251,32 +241,24 @@ class RecipeCreateForm extends Component {
     }
 
     renderTotalCost = () => {
-        let result = this.state.ingredients
-            .map(ingredient => ingredient.unit_of_measure_amt / ingredient.cost_per_unit)
-            .reduce((acc, value) => acc = acc + value, 0)
-            .toFixed(2)
-
+        let totalCost = this.recalculateTotalAmount();
         return (
             <div className='col-xs-5'>
-                <h4 id='total-cost'>Total Cost: {result}</h4>
+                <h4 id='total-cost'>Total Cost: €{totalCost}</h4>
             </div>
         )
-
     }
 
     render() {
         return (
             <form onSubmit={this.handleNewRecipe}>
-
                 {this.renderTitle()}
                 <div className='row render-ingredients'>
                     {this.renderAllIngredientInputs()}
                     <div className='col-xs-5'>
                         {this.renderIngredientSelectOption()}
-
                     </div>
                 </div>
-
                 <div className='row'>
                     <div className='col-xs-5'>
                         {this.renderTotalKcal()}
@@ -285,15 +267,12 @@ class RecipeCreateForm extends Component {
                         {this.renderTotalCost()}
                     </div>
                 </div>
-
                 <div className='row'>
                     {this.renderContent()}
                 </div>
-
                 <div className='row'>
                     {this.renderImage()}
                 </div>
-
                 <button type='submit' className='btn btn-success pull-left'>
                     Update
                 </button>

@@ -17,6 +17,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             'title',
             'content',
             'image_url',
+            'total_cost',
             'total_kcal',
         ]
 
@@ -36,6 +37,7 @@ class RecipeInlineUserSerializer(RecipeSerializer):
             'title',
             'content',
             'image_url',
+            'total_cost',
             'total_kcal',
         ]
   

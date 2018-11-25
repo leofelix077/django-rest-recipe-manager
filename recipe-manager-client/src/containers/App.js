@@ -23,9 +23,13 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <Router>
-                    <div className='onboarding'>
-                        <Navbar />
-                        <Main />
+                    <div>
+                        <div className='onboarding navbar-fixed-top'>
+                            <Navbar />
+                        </div>
+                        <div className='onboarding'>
+                            <Main />
+                        </div>
                     </div>
                 </Router>
             </Provider>

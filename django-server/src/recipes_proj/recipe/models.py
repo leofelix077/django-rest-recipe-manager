@@ -11,6 +11,7 @@ class Recipe(models.Model):
     content             = models.TextField()
     image_url           = models.CharField(max_length=255, blank=True)
     total_kcal          = models.IntegerField()
+    total_cost          = models.DecimalField(max_digits=10, decimal_places=2)
     created_on          = models.DateTimeField(auto_now_add=True)
     last_modified       = models.DateTimeField(auto_now=True)
 

@@ -10,6 +10,7 @@ import { fetchRecipes } from "../store/actions/recipes"
 import  withAuth  from "../hocs/withAuth"
 import  IngredientForm  from '../containers/IngredientForm'
 import  RecipeForm  from './RecipeForm'
+import  RecipePost  from './RecipePost'
 
 const Main = props => {
     const { authUser, errors, removeError, currentUser } = props
@@ -44,12 +45,12 @@ const Main = props => {
                     )
                 }} />
 
-                <Route path='/users/:id/ingredients/new' component={withAuth(IngredientForm)} />
-                <Route path='/users/:id/ingredients/:ing_id/edit' component={withAuth(IngredientForm)} />
+                <Route exact path='/users/:id/ingredients/new' component={withAuth(IngredientForm)} />
+                <Route exact path='/users/:id/ingredients/:ing_id/edit' component={withAuth(IngredientForm)} />
 
-                <Route path='/users/:id/recipes/new' component={withAuth(RecipeForm)} />
-                {/* <Route path='/users/:id/recipes/:recipe_id/' component={withAuth(RecipeDisplayForm)} /> */}
-                <Route path='/users/:id/recipes/:recipe_id/edit' component={withAuth(RecipeForm)} />
+                <Route exact path='/users/:id/recipes/new' component={withAuth(RecipeForm)} />
+                <Route exact path='/users/:id/recipes/:recipe_id/' component={withAuth(RecipePost)} />
+                <Route exact path='/users/:id/recipes/:recipe_id/edit' component={withAuth(RecipeForm)} />
 
             </Switch>
         </div>

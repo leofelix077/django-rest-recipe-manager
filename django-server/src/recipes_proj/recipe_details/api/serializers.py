@@ -18,10 +18,6 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
             'ingredient_amount',
         ]
 
-
-
-
-
 class RecipeIngredientInlineUserSerializer(RecipeIngredientSerializer):
 
     class Meta:
