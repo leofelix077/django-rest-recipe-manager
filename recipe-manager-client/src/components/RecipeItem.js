@@ -20,13 +20,18 @@ const RecipeItem = ({
                     <div className='col-xs-8'>
                         <h2> €{total_cost}</h2>
                     </div>
-                    <Link to={`/users/${user}/recipes/${id}/`} className='btn btn-info'>
-                        Show More
-                    </Link>
-
-                    <Link to={`/users/${user}/recipes/${id}/edit/`} className='btn btn-warning pull-right'>
-                        Edit
-                    </Link>
+                    <div className='row'>
+                    <div className='col-xs-6'>
+                        <Link to={`/users/${user}/recipes/${id}/`} className='btn btn-info'>
+                            Show More
+                        </Link>
+                    </div>
+                    <div className='col-xs-6'>
+                        <Link to={`/users/${user}/recipes/${id}/edit/`} className='btn btn-warning pull-right'>
+                            Edit
+                        </Link>
+                    </div>
+                    </div>
                 </div>
                 <blockquote className='blockquote recipe-content'>
                     <p className='text-left text-justify text-muted mb-0'>{content}</p>

@@ -120,7 +120,10 @@ class RecipeForm extends Component {
     handleIngredientRemoval = (index) => {
         let ingredients = this.state.ingredients
         ingredients[index].selected = false
+        ingredients[index].unit_of_measure_amt = 0
         this.setState({ ingredients })
+        let totalCost = this.recalculateTotalAmount();
+        this.setState({ total_cost: totalCost })
     }
 
     renderAllIngredientInputs = () => {
@@ -248,9 +251,13 @@ class RecipeForm extends Component {
         )
     }
 
+    handleRecipe = event => {
+        this.props.match.path === "/users/:id/recipes/new" ? this.handleNewRecipe(event) : this.handleUpdateRecipe(event)
+    }
+
     render() {
         return (
-            <form onSubmit={this.handleNewRecipe}>
+            <form onSubmit={this.handleRecipe}>
                 <div className="jumbotron">
                     <hr className="my-4" />
 
