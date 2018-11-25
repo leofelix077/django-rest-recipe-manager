@@ -10,7 +10,7 @@ class RecipePost extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedIngredient: [],
+            selectedIngredient: [], // TO BE FIXED
             selectedRecipeDetails: []
         }
     }
@@ -20,10 +20,10 @@ class RecipePost extends Component {
         this.props.fetchRecipe(recipe_id)
         this.props.fetchRecipeDetails(id, recipe_id).then(selectedRecipeDetails => {
             this.setState({ selectedRecipeDetails })
-        }).then(() => this.fetchIngredientDetails())
+        }).then(() => this.fetchIngredientDetails()) // TO BE FIXED
     }
 
-    fetchIngredientDetails = () => {
+    fetchIngredientDetails = () => { // TO BE FIXED
         this.state.selectedRecipeDetails.map((selectedRecipeDetail => {
             this.props.fetchIngredient(selectedRecipeDetail.ingredient).then((selectedIngredient) => {
                 this.setState({ selectedIngredient: [...this.state.selectedIngredient, { ...selectedIngredient }] })
@@ -45,18 +45,17 @@ class RecipePost extends Component {
                 )
             })
         }
-
     }
 
     render() {
         return (
             <div className="jumbotron">
-                <h1 className="display-4">{this.props.selectedRecipe && (this.props.selectedRecipe.title)}</h1>
+                <h1>{this.props.selectedRecipe && (this.props.selectedRecipe.title)}</h1>
                 <hr className="my-4" />
                 <p>Ingredient List</p>
                 <div className="row">
                     <ul className='list-group col-xs-5'>
-                        <img className='col-xs-12' src={this.props.selectedRecipe && (this.props.selectedRecipe.image_url)} />
+                        <img className='col-xs-12 recipe-detail-image' src={this.props.selectedRecipe && (this.props.selectedRecipe.image_url)} />
                     </ul>
 
                     <ul className="list-group col-xs-5">
@@ -65,17 +64,24 @@ class RecipePost extends Component {
 
                     <ul className="list-group col-xs-12">
                         <hr className="my-4" />
-                        <h2 className="display-4">Preparation</h2>
+                        <h2>Preparation</h2>
                         <li className="list-group-item text-justify">
                             {this.props.selectedRecipe && (this.props.selectedRecipe.content)}
                         </li>
                     </ul>
 
-                    <ul className="list-group col-xs-12">
-                        <h2 className="display-4">Total Cost</h2>
-                        <li className="list-group-item text-justify col-xs-2">
-                            €{this.props.selectedRecipe && (this.props.selectedRecipe.total_cost)}
+                    <ul className="list-group col-xs-6 pull-right">
+
+                        <li className="list-group-item text-justify col-xs-6">
+                            <h3>Total Cost</h3>
+                            <h2>€{this.props.selectedRecipe && (this.props.selectedRecipe.total_cost)}</h2>
                         </li>
+
+                        <li className="list-group-item text-justify col-xs-6">
+                        <h3>Total kCal</h3>
+                            <h2>{this.props.selectedRecipe && (this.props.selectedRecipe.total_kcal)}</h2>
+                        </li>
+
                     </ul>
 
                 </div>

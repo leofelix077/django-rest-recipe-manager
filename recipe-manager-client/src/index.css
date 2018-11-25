@@ -13,12 +13,12 @@ body {
 .navbar li a:hover {
   text-decoration: underline;
   cursor: pointer;
-  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);  
+  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
   background-color: #3b3b3b1f;
   font-size: 105%;
 }
 
-.navbar-brand{
+.navbar-brand {
   padding: 10%
 }
 
@@ -28,7 +28,7 @@ body {
   border-radius: 50%;
   margin-bottom: 2px;
   margin-right: 5px;
-  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5); 
+  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
 }
 
 ul.nav.navbar-nav li {
@@ -51,8 +51,9 @@ ul.nav.navbar-nav li {
   -moz-box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
   box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
 }
-.container{
-  margin-top:5%;
+
+.container {
+  margin-top: 5%;
 }
 
 .home-hero {
@@ -117,16 +118,17 @@ h4 {
   -moz-box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
   box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
 }
-.list-group-item{
+
+.list-group-item {
   transform: translate(-20, 0);
-  transition: transform 0.1s;  
+  transition: transform 0.1s;
 }
 
 #ingredients:not(.no-hover) .list-group-item:hover {
   background-color: rgba(188, 229, 229, 0.192);
   box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
-  transform: translate(20px , 0);
-  transition: transform 0.2s;  
+  transform: translate(20px, 0);
+  transition: transform 0.2s;
 }
 
 .timeline-image {
@@ -150,7 +152,6 @@ h4 {
   font-weight: bold
 }
 
-
 a.btn.btn-danger, a.btn.btn-danger:hover {
   color: white;
 }
@@ -173,7 +174,6 @@ h4 {
   color: black
 }
 
-
 #image-recipe {
   width: 250px;
   border-radius: 10%;
@@ -189,47 +189,50 @@ h4 {
   font-size: large
 }
 
-#total-cost{
+#total-cost {
   size: 2em;
   padding-right: 0;
   margin-right: 5px;
   padding-left: 1%;
   font-size: large;
-  margin-top:25px
-
+  margin-top: 25px
 }
 
 #image-recipe-small {
   width: 100%;
-  margin-top:50%;
+  margin-top: 50%;
   border-radius: 10%;
   box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
 }
 
-.btn{
+.btn {
   margin: 5px;
 }
-.blockquote{
-  background-color:  #c2c2c27a
+
+.blockquote {
+  background-color: #c2c2c27a
 }
 
-.render-ingredients{
+.render-ingredients {
   background-color: #6e6e6e1c;
   box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
-  margin:2%
+  margin: 2%
 }
 
 /* Flaired edges, by Tomas Theunissen */
 
 hr.my-4 {
-  overflow: visible; /* For IE */
+  overflow: visible;
+  /* For IE */
   height: 30px;
   border-style: solid;
   border-color: black;
   border-width: 1px 0 0 0;
   border-radius: 20px;
 }
-hr.my-4:before { /* Not really supposed to work, but does */
+
+hr.my-4:before {
+  /* Not really supposed to work, but does */
   display: block;
   content: "";
   height: 30px;
@@ -238,4 +241,27 @@ hr.my-4:before { /* Not really supposed to work, but does */
   border-color: black;
   border-width: 0 0 1px 0;
   border-radius: 20px;
+}
+
+.recipe-detail-image{
+  border-radius: 5%;
+  width: 100%;
+  height: auto;
+  box-shadow: 1px 1px 3px -2px rgba(0, 0, 0, 0.5);
+}
+a:hover {
+  text-decoration: none;
+  font-size: 105%;
+}
+a:hover>h2{ 
+  font-size: 215%
+}
+
+.recipe-content {
+  display: block; /* or inline-block */
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 6em;
+  line-height: 1.8em;
 }

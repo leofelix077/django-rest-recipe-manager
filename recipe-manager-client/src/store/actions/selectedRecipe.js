@@ -12,7 +12,7 @@ export const fetchRecipe = (recipe_id) => {
         return apiCall("get", `/api/recipes/${recipe_id}`)
             .then((res) => {
                 dispatch(fetchSelectedRecipe(res))
-                /* return res */
+                return res
             })
             .catch(err => {
                 dispatch(addError(err.detail || "Data not found"))

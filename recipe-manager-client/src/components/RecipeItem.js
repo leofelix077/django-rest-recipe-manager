@@ -21,14 +21,14 @@ const RecipeItem = ({
                         <h2> €{total_cost}</h2>
                     </div>
                     <Link to={`/users/${user}/recipes/${id}/`} className='btn btn-info'>
-                        Display
+                        Show More
                     </Link>
 
-                    <Link to={`/users/${user}/recipes/${id}/edit/`} className='btn btn-warning'>
+                    <Link to={`/users/${user}/recipes/${id}/edit/`} className='btn btn-warning pull-right'>
                         Edit
                     </Link>
                 </div>
-                <blockquote className='blockquote'>
+                <blockquote className='blockquote recipe-content'>
                     <p className='text-left text-justify text-muted mb-0'>{content}</p>
                 </blockquote>
             </li>
