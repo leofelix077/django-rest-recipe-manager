@@ -11,7 +11,7 @@ import { fetchRecipe } from "../store/actions/selectedRecipe"
 import { fetchRecipeDetails } from "../store/actions/recipeDetails"
 
 
-class RecipeCreateForm extends Component {
+class RecipeForm extends Component {
     componentDidMount = () => {
         this.props.match.path === "/users/:id/recipes/new" ? this.setInitialStateForCreation() : this.setInitialStateForUpdate()
     }
@@ -38,7 +38,6 @@ class RecipeCreateForm extends Component {
         this.props.fetchRecipe(recipe_id, id).then((selectedRecipe) => this.setState({ ...selectedRecipe }))
         this.props.fetchRecipeDetails(id, recipe_id).then((recipeDetails) => this.setState({ recipeDetails }))
         this.props.fetchIngredients(this.props.currentUser.user.user_id).then(() => this.mapSelectedIngredients());
-
     }
 
     setInitialStateForCreation = () => {
@@ -106,7 +105,7 @@ class RecipeCreateForm extends Component {
             .map(ingredient => ingredient.unit_of_measure_amt / ingredient.cost_per_unit)
             .reduce((acc, value) => acc = acc + value, 0)
             .toFixed(2)
-            return result
+        return result
     }
 
     handleIngredientAmountUpdate = (value, i) => {
@@ -114,7 +113,7 @@ class RecipeCreateForm extends Component {
         ingredients[i].unit_of_measure_amt = value
         this.setState({ ingredients })
         let totalCost = this.recalculateTotalAmount();
-        this.setState({total_cost:totalCost})
+        this.setState({ total_cost: totalCost })
 
     }
 
@@ -252,31 +251,42 @@ class RecipeCreateForm extends Component {
     render() {
         return (
             <form onSubmit={this.handleNewRecipe}>
-                {this.renderTitle()}
-                <div className='row render-ingredients'>
-                    {this.renderAllIngredientInputs()}
-                    <div className='col-xs-5'>
-                        {this.renderIngredientSelectOption()}
+                <div className="jumbotron">
+                    <hr className="my-4" />
+
+                    <p>Ingredient List</p>
+                    {this.renderTitle()}
+
+                    <div className='row render-ingredients'>
+                        {this.renderAllIngredientInputs()}
+                        <div className='col-xs-5'>
+                            {this.renderIngredientSelectOption()}
+                        </div>
                     </div>
-                </div>
-                <div className='row'>
-                    <div className='col-xs-5'>
-                        {this.renderTotalKcal()}
+
+                    <hr className="my-4" />
+
+                    <div className='row'>
+                        <div className='col-xs-5'>
+                            {this.renderTotalKcal()}
+                        </div>
+                        <div className='col-xs-5'>
+                            {this.renderTotalCost()}
+                        </div>
                     </div>
-                    <div className='col-xs-5'>
-                        {this.renderTotalCost()}
+
+                    <div className='row'>
+                        {this.renderContent()}
                     </div>
+                    <div className='row'>
+                        {this.renderImage()}
+                    </div>
+                    <button type='submit' className='btn btn-success pull-left'>
+                        Submit
+                    </button>
                 </div>
-                <div className='row'>
-                    {this.renderContent()}
-                </div>
-                <div className='row'>
-                    {this.renderImage()}
-                </div>
-                <button type='submit' className='btn btn-success pull-left'>
-                    Update
-                </button>
             </form>
+
         )
     }
 }
@@ -299,4 +309,4 @@ export default connect(mapStateToProps, {
     deleteUnusedRecipeIngredients,
     fetchRecipe,
     fetchRecipeDetails
-})(RecipeCreateForm)
+})(RecipeForm)

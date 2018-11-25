@@ -11,6 +11,7 @@ export const fetchRecipeDetails = (user_id, recipe_id) => {
     return dispatch => {
         return apiCall("get", `/api/users/${user_id}/recipe_details/${recipe_id}`)
             .then((res) => {
+                dispatch(loadRecipeDetails(res.results))
                 return res.results
             })
             .catch(err => {

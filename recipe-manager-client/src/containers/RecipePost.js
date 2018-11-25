@@ -1,58 +1,80 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
-import { postNewRecipe, updateRecipe } from "../store/actions/recipes"
-import {
-    fetchIngredients,
-    postMapIngredientsToRecipes,
-    updateMapIngredientsToRecipes,
-    deleteUnusedRecipeIngredients
-} from "../store/actions/ingredients"
 import { fetchRecipe } from "../store/actions/selectedRecipe"
+import { fetchIngredient } from "../store/actions/selectedIngredient"
 import { fetchRecipeDetails } from "../store/actions/recipeDetails"
 
 class RecipePost extends Component {
-    render() {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedIngredient: [],
+            selectedRecipeDetails: []
+        }
+    }
+
+    componentDidMount() {
+        const { id, recipe_id } = this.props.match.params
+        this.props.fetchRecipe(recipe_id)
+        this.props.fetchRecipeDetails(id, recipe_id).then(selectedRecipeDetails => {
+            this.setState({ selectedRecipeDetails })
+        }).then(() => this.fetchIngredientDetails())
+    }
+
+    fetchIngredientDetails = () => {
+        this.state.selectedRecipeDetails.map((selectedRecipeDetail => {
+            this.props.fetchIngredient(selectedRecipeDetail.ingredient).then((selectedIngredient) => {
+                this.setState({ selectedIngredient: [...this.state.selectedIngredient, { ...selectedIngredient }] })
+            })
+        }))
+    }
+
+    componentDidUpdate() {
         console.log(this.props)
+    }
+
+    renderIngredients = () => {
+        if (this.props.recipeDetails) {
+            return this.props.recipeDetails.map((recipeIngredient) => {
+                return (
+                    <li className="list-group-item">
+                        {recipeIngredient.id}:{recipeIngredient.ingredient_amount}
+                    </li>
+                )
+            })
+        }
+
+    }
+
+    render() {
         return (
             <div className="jumbotron">
-                <h1 className="display-4">Recipe Name</h1>
+                <h1 className="display-4">{this.props.selectedRecipe && (this.props.selectedRecipe.title)}</h1>
                 <hr className="my-4" />
                 <p>Ingredient List</p>
                 <div className="row">
                     <ul className='list-group col-xs-5'>
-                        <img className='col-xs-12' src='https://cdn-image.myrecipes.com/sites/default/files/styles/medium_2x/public/pork-beef-bolognese-ck.jpg' />
+                        <img className='col-xs-12' src={this.props.selectedRecipe && (this.props.selectedRecipe.image_url)} />
                     </ul>
 
                     <ul className="list-group col-xs-5">
-                        <li className="list-group-item">
-                            Ingredient 1 - 150cL
-                        </li>
-
-                        <li className="list-group-item">
-                            Ingredient 2
-                        </li>
-
-                        <li className="list-group-item">
-                            Ingredient 3
-                        </li>
-
-                        <li className="list-group-item">
-                            Ingredient 4
-                        </li>
+                        {this.renderIngredients()}
                     </ul>
 
                     <ul className="list-group col-xs-12">
+                        <hr className="my-4" />
                         <h2 className="display-4">Preparation</h2>
                         <li className="list-group-item text-justify">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam deserunt fugit odio error nesciunt aut, distinctio mollitia facere consequatur quibusdam quod totam quaerat tempora eum accusamus harum perspiciatis fuga repellat.
+                            {this.props.selectedRecipe && (this.props.selectedRecipe.content)}
                         </li>
                     </ul>
 
                     <ul className="list-group col-xs-12">
                         <h2 className="display-4">Total Cost</h2>
                         <li className="list-group-item text-justify col-xs-2">
-                            €5000,00
+                            €{this.props.selectedRecipe && (this.props.selectedRecipe.total_cost)}
                         </li>
                     </ul>
 
@@ -72,11 +94,16 @@ class RecipePost extends Component {
 
 function mapStateToProps(state) {
     return {
-        recipes: state.recipes,
         currentUser: state.currentUser,
-        queryString: state.queryString
+        recipeDetails: state.recipeDetails,
+        selectedRecipe: state.selectedRecipe,
+        selectedIngredient: state.selectedIngredient,
     }
 }
 
 
-export default connect(mapStateToProps, {})(RecipePost)
+export default connect(mapStateToProps, {
+    fetchRecipe,
+    fetchRecipeDetails,
+    fetchIngredient
+})(RecipePost)

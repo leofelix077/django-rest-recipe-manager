@@ -11,6 +11,7 @@ export const fetchIngredient = (ingredient_id) => {
     return dispatch => {
         return apiCall("get", `/api/ingredients/${ingredient_id}`)
             .then((res) => {
+                dispatch(fetchSelectedIngredient(res))
                 return res
             })
             .catch(err => {

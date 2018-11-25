@@ -46,7 +46,7 @@ class IngredientDetailAPIView(IngredientDetailAPIView):
         ingredient_id = self.kwargs.get('ingredient_id', None)        
         if id is None and ingredient_id is None:
             return Ingredient.objects.none()
-        return Ingredient.objects.filter(id=ingredient_id)
+        return Ingredient.objects.filter(user__id=id)
 
 class UserRecipeAPIView(RecipeAPIView):
     serializer_class = RecipeInlineUserSerializer
