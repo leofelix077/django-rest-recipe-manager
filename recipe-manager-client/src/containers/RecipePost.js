@@ -13,6 +13,7 @@ class RecipePost extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props.history)
         const { id, recipe_id } = this.props.match.params
         this.props.fetchRecipe(recipe_id)
         this.props.fetchRecipeDetails(id, recipe_id).then(() => {
@@ -56,12 +57,11 @@ class RecipePost extends Component {
                     <ul className="list-group col-xs-12">
                         <hr className="my-4" />
                         <h2>Preparation</h2>
-                        <li className="list-group-item text-justify">
-                            {this.props.selectedRecipe && (this.props.selectedRecipe.content)}
-                        </li>
+                        <pre className='text-justify list-group-item'>{this.props.selectedRecipe && (this.props.selectedRecipe.content)}</pre>
                     </ul>
 
                     <ul className="list-group col-xs-6 pull-right">
+                        <h2>Summary</h2>
 
                         <li className="list-group-item text-justify col-xs-6">
                             <h3>Total Cost</h3>

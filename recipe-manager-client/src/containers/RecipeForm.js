@@ -91,7 +91,7 @@ class RecipeForm extends Component {
         this.state.recipeDetails.map((recipeDetail) => {
             deleteUnusedRecipeIngredients(recipeDetail.id)
         })
-        history.push('/')
+        history.goBack()
     }
 
     handleNewRecipe = event => {
@@ -123,7 +123,6 @@ class RecipeForm extends Component {
     }
 
     handleIngredientAmountUpdate = (value, i) => {
-        console.log(this.state)
         const ingredients = this.state.ingredients
         ingredients[i].unit_of_measure_amt = value
         this.setState({ ingredients })
@@ -169,7 +168,8 @@ class RecipeForm extends Component {
                                     this.state.ingredients[i].unit_of_measure_amt
                                     / this.state.ingredients[i].original_cost_amount
                                     * this.state.ingredients[i].cost_per_unit).toFixed(2)
-                            )}</h4>
+                            )}
+                            </h4>
                             <button type="button" className='btn btn-danger' onClick={e => this.handleIngredientRemoval(i)}>Delete</button>
                         </div>
                     </div>

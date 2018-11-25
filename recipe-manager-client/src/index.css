@@ -265,3 +265,21 @@ a:hover>h2{
   max-height: 6em;
   line-height: 1.8em;
 }
+
+pre {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	overflow: unset;
+  overflow-y: unset;
+  max-width: 100%;
+	font-size: 1.4em;
+	line-height: 20px;
+	background: #efefef;
+  color: #333;
+  line-break: strict;
+  white-space: pre-wrap;
+  font-family: inherit;
+  word-break: normal
+}
