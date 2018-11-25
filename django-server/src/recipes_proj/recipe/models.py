@@ -8,9 +8,8 @@ class Recipe(models.Model):
         
     user                = models.ForeignKey(settings.AUTH_USER_MODEL)
     title               = models.CharField(max_length=140)
-    complexity          = models.CharField(max_length=20)
     content             = models.TextField()
-    image_url           = models.CharField(max_length=255)
+    image_url           = models.CharField(max_length=255, blank=True)
     total_kcal          = models.IntegerField()
     created_on          = models.DateTimeField(auto_now_add=True)
     last_modified       = models.DateTimeField(auto_now=True)

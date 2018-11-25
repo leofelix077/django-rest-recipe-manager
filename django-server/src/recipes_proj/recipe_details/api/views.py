@@ -38,3 +38,4 @@ class RecipeIngredientAPIView(generics.ListCreateAPIView):
 
 def post(self, request, *args, **kwargs):
     return self.create(request, *args, **kwargs)
+

@@ -25,6 +25,7 @@ class IngredientList extends Component {
                 user={recipe.user}
                 title={recipe.title}
                 content={recipe.content}
+                image_url={recipe.image_url}
             />
         })
         return (

@@ -4,6 +4,8 @@ import errors from "./errors"
 import ingredients from "./ingredients"
 import recipes from "./recipes"
 import selectedIngredient from "./selectedIngredient"
+import selectedRecipe from "./selectedRecipe"
+import recipeDetails from "./recipeDetails"
 
 
 const rootReducer = combineReducers({
@@ -11,7 +13,9 @@ const rootReducer = combineReducers({
     errors,
     ingredients,
     recipes,
-    selectedIngredient
+    selectedIngredient,
+    selectedRecipe,
+    recipeDetails
 })
 
 export default rootReducer

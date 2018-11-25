@@ -6,7 +6,7 @@ from recipe.models import Recipe
 class RecipeIngredient(models.Model):
         
     user                = models.ForeignKey(settings.AUTH_USER_MODEL)
-    recipe              = models.ForeignKey(Recipe)
+    recipe              = models.ForeignKey(Recipe, blank=True, null=True)
     ingredient          = models.ForeignKey(Ingredient)
     ingredient_amount   = models.DecimalField(max_digits=10, decimal_places=2)
 

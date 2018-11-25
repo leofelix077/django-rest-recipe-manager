@@ -13,18 +13,34 @@ export const updateQueryString = queryString => ({
     queryString
 })
 
-export const postMapIngredientsToRecipes = (data) => (dispatch, getState) => {
-    let { currentUser } = getState();
-    const id = currentUser.user.user_id
-    const newData = { ...data, user: id }
-    return apiCall('post', `/api/users/${id}/ingredients/`, newData)
-        .then((res) => {
-        })
+
+export const deleteUnusedRecipeIngredients = (recipe_ingredient_id) => (dispatch) => {
+    return apiCall('delete', `/api/recipe_details/${recipe_ingredient_id}`)
+        .then((res) => { })
         .catch((err) => {
             dispatch(addError(err || "Not possible to post ingredient"))
         })
 }
 
+export const postMapIngredientsToRecipes = (data, recipe) => (dispatch, getState) => {
+    let { currentUser } = getState();
+    const user = currentUser.user.user_id
+    const { id, unit_of_measure_amt, unit_of_measurement } = data
+    const newData = { ingredient: id, ingredient_amount: unit_of_measure_amt, unit_of_measurement, user, recipe }
+    return apiCall('post', `/api/recipe_details/`, newData)
+        .then((res) => { })
+        .catch((err) => {
+            dispatch(addError(err || "Not possible to post ingredient"))
+        })
+}
+
+export const updateMapIngredientsToRecipes = (data) => (dispatch) => {
+    return apiCall('put', `/api/recipe_details/${data.id}/`, data)
+        .then((res) => { })
+        .catch((err) => {
+            dispatch(addError(err || "Not possible to post ingredient"))
+        })
+}
 
 export const fetchIngredients = (user_id, queryString) => {
     let query = queryString ? `?q=${queryString}` : ''
@@ -44,8 +60,7 @@ export const postNewIngredient = (data) => (dispatch, getState) => {
     const id = currentUser.user.user_id
     const newData = { ...data, user: id }
     return apiCall('post', `/api/users/${id}/ingredients/`, newData)
-        .then((res) => {
-        })
+        .then(() => { })
         .catch((err) => {
             dispatch(addError(err || "Not possible to post ingredient"))
         })
@@ -53,8 +68,7 @@ export const postNewIngredient = (data) => (dispatch, getState) => {
 
 export const updateIngredient = (data) => (dispatch) => {
     return apiCall('put', `/api/ingredients/${data.id}/`, data)
-        .then((res) => {
-        })
+        .then(() => { })
         .catch((err) => {
             dispatch(addError(err || "Not possible to post ingredient"))
         })

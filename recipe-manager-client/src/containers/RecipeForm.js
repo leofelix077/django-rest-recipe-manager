@@ -1,23 +1,25 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { postNewRecipe, updateRecipe } from "../store/actions/recipes"
-import { fetchIngredients, postMapIngredientsToRecipes } from "../store/actions/ingredients"
+import {
+    fetchIngredients,
+    postMapIngredientsToRecipes,
+    updateMapIngredientsToRecipes,
+    deleteUnusedRecipeIngredients
+} from "../store/actions/ingredients"
+import { fetchRecipe } from "../store/actions/selectedRecipe"
+import { fetchRecipeDetails } from "../store/actions/recipeDetails"
 
-class RecipeForm extends Component {
+
+class RecipeCreateForm extends Component {
     componentDidMount() {
-        this.props.fetchIngredients(this.props.currentUser.user.user_id).then(() => {
-            this.props.ingredients.map((ingredient, index) => {
-                this.setState({ ingredients: [...this.state.ingredients, { ...ingredient, selected: false, unit_of_measure_amt: 0 }] })
-            })
-            this.setState({ selectedValue: '' })
-        });
+        this.props.match.path === "/users/:id/recipes/new" ? this.setInitialStateForCreation() : this.setInitialStateForUpdate()
     }
 
     constructor(props) {
         super(props);
         this.state = {
             title: '',
-            complexity: '1',
             content: '',
             image_url: '',
             total_kcal: '',
@@ -27,14 +29,84 @@ class RecipeForm extends Component {
         }
     }
 
+    mapSelectedIngredients = () => {
+        this.props.ingredients.map((ingredient) => {
+            let unitOfMeasurementAmount = 0;
+            let selected = this.state.recipeDetails.some(recipeDetail => {
+                unitOfMeasurementAmount = recipeDetail.ingredient === ingredient.id ? recipeDetail.ingredient_amount : 0
+                return recipeDetail.ingredient === ingredient.id
+            })
+            this.setState({ ingredients: [...this.state.ingredients, { ...ingredient, selected, unit_of_measure_amt: unitOfMeasurementAmount }] })
+        })
+
+        this.setState({ selectedValue: '' })
+    }
+
+    setInitialStateForUpdate = () => {
+        const { id, recipe_id } = this.props.match.params
+        this.props.fetchRecipe(recipe_id).then((selectedRecipe) =>
+            this.setState({ ...selectedRecipe })
+        )
+        this.props.fetchRecipeDetails(id, recipe_id).then((recipeDetails) => {
+            this.setState({ recipeDetails })
+        })
+
+        this.props.fetchIngredients(this.props.currentUser.user.user_id).then(() => {
+            this.mapSelectedIngredients()
+        });
+    }
+
+    setInitialStateForCreation = () => {
+        this.props.fetchIngredients(this.props.currentUser.user.user_id).then(() => {
+            this.props.ingredients.map((ingredient, index) => {
+                this.setState({ ingredients: [...this.state.ingredients, { ...ingredient, selected: false, unit_of_measure_amt: 0 }] })
+            })
+            this.setState({ selectedValue: '' })
+        });
+    }
+
+    handleUpdateRecipe = event => {
+        event.preventDefault()
+        const { user, title, complexity, content, image_url, total_kcal, id } = this.state
+        this.props.updateRecipe({ id, user, title, complexity, content, image_url, total_kcal })
+            .then((recipe) => this.mapRecipeToIngredients(recipe))
+    }
+
+    mapRecipeToIngredients = (recipe) => {
+        const { ingredients, recipeDetails } = this.state
+        const { updateMapIngredientsToRecipes, postMapIngredientsToRecipes, deleteUnusedRecipeIngredients, history } = this.props
+        ingredients.filter((ingredient) => ingredient.selected !== false && ingredient.unit_of_measure_amt)
+            .map(ingredient => {
+                let idx = -1;
+                let recipeIngredientLinkExists = recipeDetails.some((recipeDetail, index) => {
+                    idx = recipeDetail.ingredient === ingredient.id ? index : -1
+                    return recipeDetail.ingredient === ingredient.id
+                })
+                if (recipeIngredientLinkExists) {
+                    updateMapIngredientsToRecipes({ ...recipeDetails[idx], ingredient_amount: ingredient.unit_of_measure_amt }, recipe.id)
+                    let recipeDtls = this.state.recipeDetails.filter((recipeDetail) => recipeDetail.ingredient !== ingredient.id)
+                    this.setState({ recipeDetails: recipeDtls })
+                } else {
+                    postMapIngredientsToRecipes(ingredient, recipe.id)
+                }
+            })
+        this.state.recipeDetails.map((recipeDetail) => {
+            deleteUnusedRecipeIngredients(recipeDetail.id)
+        })
+        history.push('/')
+    }
+
     handleNewRecipe = event => {
         event.preventDefault()
         const { user, title, complexity, content, image_url, total_kcal } = this.state
         this.props.postNewRecipe({ user, title, complexity, content, image_url, total_kcal })
             .then((recipe) => {
-                this.props.postMapIngredientsToRecipes(this.state, recipe.id)
-                    .then(() => this.props.history.push('/'))
-
+                const { ingredients } = this.state
+                ingredients.filter((ingredient) => ingredient.selected !== false && ingredient.unit_of_measure_amt)
+                    .map(ingredient => {
+                        this.props.postMapIngredientsToRecipes(ingredient, recipe.id)
+                            .then(() => this.props.history.push('/'))
+                    })
             })
     }
 
@@ -57,10 +129,9 @@ class RecipeForm extends Component {
         this.setState({ ingredients })
     }
 
-    renderIngredientInput = () => {
+    renderAllIngredientInputs = () => {
         let items = []
-
-        items.push(<label htmlFor='unit_of_measure_amt'>Ingredient</label>)
+        items.push(<h2>Ingredients</h2>)
         for (let i = 0; i < this.state.ingredients.length; i++) {
             if (this.state.ingredients[i].selected)
                 items.push(
@@ -173,9 +244,8 @@ class RecipeForm extends Component {
                     id="image_url"
                     defaultValue={this.state.image_url}
                     onChange={e => this.setState({ image_url: e.target.value })}
-                    required
                 />
-                <img id='image-recipe' className='rounded mx-auto d-block' src={this.state.image_url} />
+                <img id='image-recipe' className='rounded mx-auto d-block' src={this.state.image_url || 'https://www.digitalcitizen.life/sites/default/files/styles/lst_small/public/featured/2016-08/photo_gallery.jpg'} />
             </div>
         )
     }
@@ -199,9 +269,9 @@ class RecipeForm extends Component {
             <form onSubmit={this.handleNewRecipe}>
 
                 {this.renderTitle()}
-                <div className='row'>
-                    {this.renderIngredientInput()}
-                    <div className='col-xs-2'>
+                <div className='row render-ingredients'>
+                    {this.renderAllIngredientInputs()}
+                    <div className='col-xs-5'>
                         {this.renderIngredientSelectOption()}
 
                     </div>
@@ -225,7 +295,7 @@ class RecipeForm extends Component {
                 </div>
 
                 <button type='submit' className='btn btn-success pull-left'>
-                    {this.state.editMode ? ('Update') : ('Create')}
+                    Update
                 </button>
             </form>
         )
@@ -245,5 +315,9 @@ export default connect(mapStateToProps, {
     postNewRecipe,
     updateRecipe,
     fetchIngredients,
-    postMapIngredientsToRecipes
-})(RecipeForm)
+    postMapIngredientsToRecipes,
+    updateMapIngredientsToRecipes,
+    deleteUnusedRecipeIngredients,
+    fetchRecipe,
+    fetchRecipeDetails
+})(RecipeCreateForm)

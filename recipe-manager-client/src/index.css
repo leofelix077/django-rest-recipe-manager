@@ -11,9 +11,11 @@ body {
 }
 
 .navbar li a:hover {
-  color: rgb(16, 0, 156);
   text-decoration: underline;
   cursor: pointer;
+  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);  
+  background-color: #3b3b3b1f;
+  font-size: 105%;
 }
 
 .navbar-brand>img {
@@ -109,7 +111,10 @@ h4 {
 }
 
 #ingredients:not(.no-hover) .list-group-item:hover {
-  background-color: rgba(188, 229, 229, 0.192)
+  background-color: rgba(188, 229, 229, 0.192);
+  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
+  transform: translate(20px , 0);
+  transition: transform 0.2s;  
 }
 
 .timeline-image {
@@ -128,8 +133,12 @@ h4 {
 
 .btn:hover {
   cursor: pointer;
-  color: #e65100
+  opacity: 50%;
+  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
+  font-size: 105%;
+  font-weight: bold
 }
+
 
 a.btn.btn-danger, a.btn.btn-danger:hover {
   color: white;
@@ -153,9 +162,6 @@ h4 {
   color: black
 }
 
-select.form-control {
-  width: 200%
-}
 
 #image-recipe {
   width: 250px;
@@ -181,3 +187,24 @@ select.form-control {
   margin-top:25px
 
 }
+
+#image-recipe-small {
+  width: 100%;
+  margin-top:50%;
+  border-radius: 10%;
+  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
+}
+
+.btn{
+  margin: 5px;
+}
+.blockquote{
+  background-color:  #c2c2c27a
+}
+
+.render-ingredients{
+  background-color: #6e6e6e1c;
+  box-shadow: 3px 3px 7px -2px rgba(0, 0, 0, 0.5);
+  margin:2%
+}
+

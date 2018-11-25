@@ -41,9 +41,6 @@
 <p><strong>Authorization is disabled. You can login, but the token is not verified later if you change the request by hand</strong>&nbsp;</p>
 </li>
 <li>
-<p><strong>Model for Recipe is not normalized (There isn't a Recipe and RecipeDetails table. It's all on "Recipe")</strong>&nbsp;</p>
-</li>
-<li>
-<p><strong>Nested Routes for "{api_root}/users/{id}/recipes/" return only {"ingredient":{:id}}, not the Nested Object</strong>&nbsp;</p>
+<p><strong>Nested Routes for "{api_root}/users/{id}/recipe_details/" return only {"ingredient":{:id}}, not the Nested Object. Pending a writable nested serializer</strong>&nbsp;</p>
 </li>
 </ol>

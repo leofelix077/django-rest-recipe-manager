@@ -9,7 +9,7 @@ import { fetchIngredients } from "../store/actions/ingredients"
 import { fetchRecipes } from "../store/actions/recipes"
 import  withAuth  from "../hocs/withAuth"
 import  IngredientForm  from '../containers/IngredientForm'
-import  RecipeForm  from '../containers/RecipeForm'
+import  RecipeForm  from './RecipeForm'
 
 const Main = props => {
     const { authUser, errors, removeError, currentUser } = props
@@ -48,6 +48,7 @@ const Main = props => {
                 <Route path='/users/:id/ingredients/:ing_id/edit' component={withAuth(IngredientForm)} />
 
                 <Route path='/users/:id/recipes/new' component={withAuth(RecipeForm)} />
+                {/* <Route path='/users/:id/recipes/:recipe_id/' component={withAuth(RecipeDisplayForm)} /> */}
                 <Route path='/users/:id/recipes/:recipe_id/edit' component={withAuth(RecipeForm)} />
 
             </Switch>
