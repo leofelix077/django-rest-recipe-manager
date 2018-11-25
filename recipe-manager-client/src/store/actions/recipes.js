@@ -39,7 +39,6 @@ export const postNewRecipe = (data) => (dispatch, getState) => {
 }
 
 export const updateRecipe = (data) => (dispatch) => {
-    debugger;
     return apiCall('put', `/api/recipes/${data.id}/`, data)
         .then((res) => {
             return res

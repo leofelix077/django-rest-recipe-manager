@@ -1,9 +1,16 @@
 import { FETCH_SELECTED_INGREDIENT } from "../actionTypes"
 
-const selectedIngredient = (state = null, action) => {
+const INITIAL_STATE = {
+    selectedIngredient: []
+}
+
+const selectedIngredient = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case FETCH_SELECTED_INGREDIENT:
-            return { ...action.selectedIngredient }
+            return {
+                selectedIngredient: [...state.selectedIngredient.concat(action.selectedIngredient)]
+            }
+
         default:
             return state;
     }

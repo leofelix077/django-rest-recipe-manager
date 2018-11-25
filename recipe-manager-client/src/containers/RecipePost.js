@@ -9,38 +9,29 @@ class RecipePost extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            selectedIngredient: [], // TO BE FIXED
-            selectedRecipeDetails: []
-        }
+
     }
 
     componentDidMount() {
         const { id, recipe_id } = this.props.match.params
         this.props.fetchRecipe(recipe_id)
-        this.props.fetchRecipeDetails(id, recipe_id).then(selectedRecipeDetails => {
-            this.setState({ selectedRecipeDetails })
-        }).then(() => this.fetchIngredientDetails()) // TO BE FIXED
-    }
+        this.props.fetchRecipeDetails(id, recipe_id).then(() => {
+            this.props.recipeDetails.map((selectedRecipeDetail => {
+                this.props.fetchIngredient(selectedRecipeDetail.ingredient)
+            }))
+        })
 
-    fetchIngredientDetails = () => { // TO BE FIXED
-        this.state.selectedRecipeDetails.map((selectedRecipeDetail => {
-            this.props.fetchIngredient(selectedRecipeDetail.ingredient).then((selectedIngredient) => {
-                this.setState({ selectedIngredient: [...this.state.selectedIngredient, { ...selectedIngredient }] })
-            })
-        }))
-    }
-
-    componentDidUpdate() {
-        console.log(this.props)
     }
 
     renderIngredients = () => {
         if (this.props.recipeDetails) {
             return this.props.recipeDetails.map((recipeIngredient) => {
+                let ingredient;
+                if (this.props.selectedIngredient)
+                    ingredient = this.props.selectedIngredient.selectedIngredient.find((ingredient) => ingredient.id === recipeIngredient.ingredient)
                 return (
                     <li className="list-group-item">
-                        {recipeIngredient.id}:{recipeIngredient.ingredient_amount}
+                        {ingredient && (ingredient.title)} : {recipeIngredient.ingredient_amount} {ingredient && (ingredient.unit_of_measurement)}
                     </li>
                 )
             })
@@ -78,7 +69,7 @@ class RecipePost extends Component {
                         </li>
 
                         <li className="list-group-item text-justify col-xs-6">
-                        <h3>Total kCal</h3>
+                            <h3>Total kCal</h3>
                             <h2>{this.props.selectedRecipe && (this.props.selectedRecipe.total_kcal)}</h2>
                         </li>
 
